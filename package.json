@@ -1,0 +1,17 @@
+{
+    "name": "nodeftp",
+    "version": "0.0.1",
+    "description": "An FTP server powered by Node.js",
+    "keywords": ["ftp", "node", "js", "server"],
+    "author": "Alex R. Young <info@dailyjs.com>",
+    "main": "index",
+    "engines": {
+        "node": ">= 0.10.x"
+    },
+    "scripts": {
+        "test": "make test"
+    },
+    "devDependencies": {
+        "mocha": "0.3.x"
+    }
+}
