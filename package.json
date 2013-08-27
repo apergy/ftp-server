@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "description": "An FTP server powered by Node.js",
     "keywords": ["ftp", "node", "js", "server"],
-    "author": "Alex R. Young <info@dailyjs.com>",
+    "author": "Richard Edwards <apergy.dev@gmail.com>",
     "main": "index",
     "engines": {
         "node": ">= 0.10.x"
