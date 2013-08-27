@@ -1,12 +1,12 @@
 var assert = require('chai').assert,
     sinon  = require('sinon'),
-    events = require('events'),
+    EventEmitter = require('events').EventEmitter,
     Router = require('../script/Router');
 
 suite('Router', function () {
     setup(function () {
-        this.connection = new events.EventEmitter;
-        sinon.spy(this.connection, 'on');
+        sinon.spy(EventEmitter.prototype, 'on');
+        this.connection = new EventEmitter;
 
         sinon.spy(Router.prototype, 'route');
         this.router = new Router({ incoming: this.connection });
@@ -22,7 +22,7 @@ suite('Router', function () {
     });
 
     test('listens on incoming connection data', function () {
-        assert.ok(this.connection.on.calledWith('data'));
+        assert.ok(EventEmitter.prototype.on.calledWith('data'));
     });
 
     test('attempts to route any incoming data', function () {
