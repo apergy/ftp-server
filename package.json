@@ -16,8 +16,12 @@
     "scripts": {
         "test": "make test"
     },
+    "dependencies": {
+        "underscore": "1.5.x"
+    },
     "devDependencies": {
         "mocha": "1.12.x",
-        "chai": "1.7.x"
+        "chai": "1.7.x",
+        "sinon": "1.7.x"
     }
 }
