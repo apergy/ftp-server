@@ -3,7 +3,8 @@
     "version": "0.0.1",
     "description": "An FTP server powered by Node.js",
     "keywords": ["ftp", "node", "js", "server"],
-    "author": "Richard Edwards <apergy.dev@gmail.com>",
+    "author": "Richard Edwards <apergy.dev@gmail.com> (http://apergy.co.uk)",
+    "license" : "MIT",
     "main": "index",
     "engines": {
         "node": ">= 0.10.x"
@@ -16,6 +17,7 @@
         "test": "make test"
     },
     "devDependencies": {
-        "mocha": "0.3.x"
+        "mocha": "1.12.x",
+        "chai": "1.7.x"
     }
 }
