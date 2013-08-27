@@ -14,7 +14,7 @@ suite('Router', function () {
 
     teardown(function () {
         this.connection.on.restore();
-        this.router.route.restore();
+        Router.prototype.route.restore();
     });
 
     test('recieves an incoming connection', function () {
