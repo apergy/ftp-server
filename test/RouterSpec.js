@@ -1,11 +1,13 @@
-var expect       = require('chai').expect,
+var assert       = require('chai').assert,
     EventEmitter = require('events').EventEmitter,
     Router       = require('../script/Router');
 
-describe('Router', function () {
-    var router = new Router({ incoming: EventEmitter });
-
-    it('should recieve an incoming connection', function () {
-        expect(router.incoming).to.equal(EventEmitter);
+suite('Router', function () {
+    setup(function () {
+        this.router = new Router({ incoming: EventEmitter });
     });
-})
+
+    test('should recieve an incoming connection', function () {
+        assert.equal(this.router.incoming, EventEmitter);
+    });
+});
