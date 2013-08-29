@@ -16,14 +16,19 @@ _.extend(Router.prototype, {
     },
 
     /**
-     * Parses an incoming request into logical pieces
+     * Parses an incoming request into routable pieces
      *
      * @param  {String} request
      * @return {Array}
      */
     parse: function (request) {
-        var parts = request.split(' ');
-        return { command: parts[0].toLowerCase(), data: parts[1] };
+        request = request.toString().trim();
+        var index = request.indexOf(' ');
+
+        return {
+            command: request.slice(0, index).toLowerCase(),
+            data: request.slice(index + 1, request.length)
+        };
     },
 
     /**
