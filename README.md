@@ -1,5 +1,5 @@
-nodeftp
-=======
+node-ftp
+========
 
 An FTP server powered by Node.js
 
