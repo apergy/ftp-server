@@ -12,6 +12,7 @@ suite('Router', function () {
         sinon.spy(EventEmitter.prototype, 'on');
         this.connection = new EventEmitter;
 
+        sinon.spy(Router.prototype, 'initialize');
         sinon.spy(Router.prototype, 'parse');
         sinon.spy(Router.prototype, 'route');
         this.router = new Router({ incoming: this.connection, commands: this.commands });
@@ -19,8 +20,14 @@ suite('Router', function () {
 
     teardown(function () {
         EventEmitter.prototype.on.restore();
+        Router.prototype.initialize.restore();
         Router.prototype.parse.restore();
         Router.prototype.route.restore();
+    });
+
+    test('can be instantiated', function () {
+        assert.isFunction(Router);
+        assert.isObject(this.router);
     });
 
     test('attaches router directly to instance', function () {
@@ -28,6 +35,10 @@ suite('Router', function () {
     });
 
     suite('#initialize()', function () {
+        test('should be called on instantiation', function () {
+            assert.ok(Router.prototype.initialize.called);
+        });
+
         test('listens on incoming connection data', function () {
             assert.ok(EventEmitter.prototype.on.calledWith('data'));
         });
