@@ -19,10 +19,6 @@ suite('Router', function () {
         Router.prototype.route.restore();
     });
 
-    test('recieves an incoming connection', function () {
-        assert.equal(this.router.incoming, this.connection);
-    });
-
     suite('#initialize()', function () {
         test('listens on incoming connection data', function () {
             assert.ok(EventEmitter.prototype.on.calledWith('data'));
