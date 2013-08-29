@@ -5,7 +5,7 @@ var assert = require('chai').assert,
 
 suite('Router', function () {
     setup(function () {
-        this.routes = {
+        this.commands = {
             user: function () {}
         };
 
@@ -14,7 +14,7 @@ suite('Router', function () {
 
         sinon.spy(Router.prototype, 'parse');
         sinon.spy(Router.prototype, 'route');
-        this.router = new Router({ incoming: this.connection, routes: this.routes });
+        this.router = new Router({ incoming: this.connection, commands: this.commands });
     });
 
     teardown(function () {
@@ -24,7 +24,7 @@ suite('Router', function () {
     });
 
     test('attaches router directly to instance', function () {
-        assert.equal(this.router.routes, this.routes);
+        assert.equal(this.router.commands, this.commands);
     });
 
     suite('#initialize()', function () {
@@ -52,10 +52,10 @@ suite('Router', function () {
         });
 
         test('attempts to call the related command', function () {
-            sinon.spy(this.routes, 'user');
+            sinon.spy(this.commands, 'user');
             this.connection.emit('data', 'USER Joe Bloggs');
-            assert.ok(this.routes.user.calledWith('Joe Bloggs'));
-            this.routes.user.restore();
+            assert.ok(this.commands.user.calledWith('Joe Bloggs'));
+            this.commands.user.restore();
         });
     });
 });

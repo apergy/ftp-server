@@ -1,7 +1,7 @@
 var _ = require('underscore');
 
 var Router = function (options) {
-    this.routes = options.routes;
+    this.commands = options.commands;
     this.initialize.apply(this, arguments);
 };
 
@@ -38,7 +38,7 @@ _.extend(Router.prototype, {
      */
     route: function (request) {
         request = this.parse(request);
-        this.routes[request.command].call(this, request.data);
+        this.commands[request.command].call(this, request.data);
     }
 });
 
