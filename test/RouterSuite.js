@@ -33,28 +33,28 @@ suite('Router', function () {
         });
 
         test('attempts to route any incoming data', function () {
-            this.connection.emit('data', 'USER admin');
-            assert.ok(Router.prototype.route.calledWith('USER admin'));
+            this.connection.emit('data', 'USER Joe Bloggs');
+            assert.ok(Router.prototype.route.calledWith('USER Joe Bloggs'));
         });
     });
 
     suite('#parse()', function () {
         test('returns request parameters', function () {
-            var expected = { command: 'user', data: 'admin' };
-            assert.deepEqual(this.router.parse('USER admin'), expected);
+            var expected = { command: 'user', data: 'Joe Bloggs' };
+            assert.deepEqual(this.router.parse('USER Joe Bloggs'), expected);
         });
     });
 
     suite('#route()', function () {
         test('incoming request should get parsed', function () {
-            this.connection.emit('data', 'USER admin');
-            assert.ok(Router.prototype.parse.calledWith('USER admin'));
+            this.connection.emit('data', 'USER Joe Bloggs');
+            assert.ok(Router.prototype.parse.calledWith('USER Joe Bloggs'));
         });
 
         test('attempts to call the related command', function () {
             sinon.spy(this.routes, 'user');
-            this.connection.emit('data', 'USER admin');
-            assert.ok(this.routes.user.calledWith('admin'));
+            this.connection.emit('data', 'USER Joe Bloggs');
+            assert.ok(this.routes.user.calledWith('Joe Bloggs'));
             this.routes.user.restore();
         });
     });
