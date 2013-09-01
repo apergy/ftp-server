@@ -10,12 +10,12 @@ suite('Router', function () {
         };
 
         sinon.spy(EventEmitter.prototype, 'on');
-        this.connection = new EventEmitter;
+        this.request = new EventEmitter;
 
         sinon.spy(Router.prototype, 'initialize');
         sinon.spy(Router.prototype, 'parse');
         sinon.spy(Router.prototype, 'route');
-        this.router = new Router({ incoming: this.connection, commands: this.commands });
+        this.router = new Router({ incoming: this.request, commands: this.commands });
     });
 
     teardown(function () {
@@ -30,7 +30,7 @@ suite('Router', function () {
         assert.isObject(this.router);
     });
 
-    test('attaches router directly to instance', function () {
+    test('attaches commands directly to instance', function () {
         assert.equal(this.router.commands, this.commands);
     });
 
@@ -39,12 +39,12 @@ suite('Router', function () {
             assert.ok(Router.prototype.initialize.called);
         });
 
-        test('listens on incoming connection data', function () {
+        test('listens on incoming request', function () {
             assert.ok(EventEmitter.prototype.on.calledWith('data'));
         });
 
-        test('attempts to route any incoming data', function () {
-            this.connection.emit('data', 'USER Joe Bloggs');
+        test('attempts to route any request data', function () {
+            this.request.emit('data', 'USER Joe Bloggs');
             assert.ok(Router.prototype.route.calledWith('USER Joe Bloggs'));
         });
     });
@@ -58,13 +58,13 @@ suite('Router', function () {
 
     suite('#route()', function () {
         test('incoming request should get parsed', function () {
-            this.connection.emit('data', 'USER Joe Bloggs');
+            this.request.emit('data', 'USER Joe Bloggs');
             assert.ok(Router.prototype.parse.calledWith('USER Joe Bloggs'));
         });
 
         test('attempts to call the related command', function () {
             sinon.spy(this.commands, 'user');
-            this.connection.emit('data', 'USER Joe Bloggs');
+            this.request.emit('data', 'USER Joe Bloggs');
             assert.ok(this.commands.user.calledWith('Joe Bloggs'));
             this.commands.user.restore();
         });
