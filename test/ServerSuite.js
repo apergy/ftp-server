@@ -9,6 +9,7 @@ suite('Server', function () {
         this.connection = new EventEmitter;
 
         sinon.spy(Server.prototype, 'initialize');
+        sinon.stub(Server.prototype, 'error');
         sinon.spy(Server.prototype, 'handle');
         this.server = new Server({
             incoming: this.connection
@@ -18,6 +19,7 @@ suite('Server', function () {
     teardown(function () {
         EventEmitter.prototype.on.restore();
         Server.prototype.initialize.restore();
+        Server.prototype.error.restore();
         Server.prototype.handle.restore();
     });
 
@@ -35,7 +37,21 @@ suite('Server', function () {
             assert.ok(EventEmitter.prototype.on.calledWith('connection'));
         });
 
-        test('attempts to handle a connection', function () {
+        test('listens for any errors', function () {
+            assert.ok(EventEmitter.prototype.on.calledWith('error'));
+        });
+    });
+
+    suite('#error()', function () {
+        test('recieves a connection error', function () {
+            var fakeError = sinon.spy();
+            this.connection.emit('error', fakeError);
+            assert.ok(Server.prototype.error.calledWith(fakeError));
+        });
+    });
+
+    suite('#handle()', function () {
+        test('recieves an incoming connection', function () {
             var fakeConnection = sinon.spy();
             this.connection.emit('connection', fakeConnection);
             assert.ok(Server.prototype.handle.calledWith(fakeConnection));

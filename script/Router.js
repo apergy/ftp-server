@@ -12,7 +12,17 @@ _.extend(Router.prototype, {
      * @param  {Object} options
      */
     initialize: function (options) {
+        options.incoming.on('error', this.error);
         options.incoming.on('data', _.bind(this.route, this));
+    },
+
+    /**
+     * Logs the error to the console
+     *
+     * @param  {Error} error
+     */
+    error: function (error) {
+        console.log('Router Error:', error);
     },
 
     /**

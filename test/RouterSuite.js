@@ -13,6 +13,7 @@ suite('Router', function () {
         this.request = new EventEmitter;
 
         sinon.spy(Router.prototype, 'initialize');
+        sinon.stub(Router.prototype, 'error');
         sinon.spy(Router.prototype, 'parse');
         sinon.spy(Router.prototype, 'route');
         this.router = new Router({ incoming: this.request, commands: this.commands });
@@ -21,6 +22,7 @@ suite('Router', function () {
     teardown(function () {
         EventEmitter.prototype.on.restore();
         Router.prototype.initialize.restore();
+        Router.prototype.error.restore();
         Router.prototype.parse.restore();
         Router.prototype.route.restore();
     });
@@ -39,6 +41,10 @@ suite('Router', function () {
             assert.ok(Router.prototype.initialize.called);
         });
 
+        test('listens for any errors', function () {
+            assert.ok(EventEmitter.prototype.on.calledWith('error'));
+        });
+
         test('listens on incoming request', function () {
             assert.ok(EventEmitter.prototype.on.calledWith('data'));
         });
@@ -46,6 +52,14 @@ suite('Router', function () {
         test('attempts to route any request data', function () {
             this.request.emit('data', 'USER Joe Bloggs');
             assert.ok(Router.prototype.route.calledWith('USER Joe Bloggs'));
+        });
+    });
+
+    suite('#error()', function () {
+        test('recieves a connection error', function () {
+            var fakeError = sinon.spy();
+            this.request.emit('error', fakeError);
+            assert.ok(Router.prototype.error.calledWith(fakeError));
         });
     });
 
