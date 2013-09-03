@@ -27,9 +27,9 @@ _.extend(Server.prototype, {
     /**
      * Handles the incoming connection
      *
-     * @param  {String} request
+     * @param  {Socket} socket
      */
-    handle: function () {}
+    handle: function (socket) {}
 });
 
 module.exports = Server;
